@@ -14,13 +14,15 @@ setUpStation()->
     S8 = pollution:addValue("Station1", "Temperature", {{2020,4,13}, {18, 10, 10}}, 15, S7),
     S9 = pollution:addValue("Station2", "Temperature", {{2020,4,13}, {18, 10, 10}}, 19, S8),
     S10 = pollution:addValue("Station3", "Temperature", {{2020,4,13}, {18, 10, 10}}, 18, S9),
-    pollution:addValue("Station3", "Temperature", {{2020,4,13}, {18, 10, 10}}, 36, S10).
+    S11 = pollution:addValue("Station3", "Temperature", {{2020,4,13}, {18, 10, 10}}, 36, S10),
+    pollution:removeValue("Station2", "Temperature",{{2020,4,13}, {18, 10, 10}}, S11).
 
 valueRetrievalTests()->
     S = setUpStation(),
     ?assertEqual(99, pollution:getOneValue("Station3", "Ozone", {{2020,4,13}, {18,50,10}}, S)),
     ?assertEqual(83.5, pollution:getStationMean("Station3", "Ozone", S)),
     ?assertEqual(73.5,pollution:getDailyMean("Ozone", {2020,4,13}, S)),
+    ?assertEqual(16.5, pollution:getDailyMean("Temperature", {2020,4,13}, S)),
     ?assertEqual(99, pollution:getMaxOfTypeStation("Station3", "Ozone", S)),
     ?assertEqual({"Ozone", 2}, pollution:getMostFrequentTypeStation("Station3", S)).
 
